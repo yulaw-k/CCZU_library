@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yulaw.reader.mapper.BookMapper">
+    <update id="updateEvaluation">
+        update book b set evaluation_score = (
+            select IFNULL(avg(Score),0) from evaluation WHERE book_id = b.book_id AND state = 'enable'),
+                          evaluation_quantity = (
+                              select IFNULL(count(*),0) from evaluation WHERE book_id = b.book_id AND state = 'enable');
+    </update>
+</mapper>
